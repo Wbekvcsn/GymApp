@@ -1,0 +1,10 @@
+const express=require('express');
+const {userRegister,userLogin, userForgotPassword, resetPassword, changePassword} = require('../controller/userController');
+const {userRegisterValidation,userLoginValidation} = require('../validation/userValidation');
+const userRouter=express.Router();
+userRouter.post('/register',userRegisterValidation,userRegister);
+userRouter.post('/login',userLoginValidation,userLogin);
+userRouter.post('/forgot-password',userForgotPassword);
+userRouter.post('/reset-password',resetPassword);
+userRouter.post('change-password',changePassword);
+module.exports=userRouter;
