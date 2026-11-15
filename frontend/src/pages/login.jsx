@@ -1,7 +1,7 @@
-
 import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import './auth.css';
 
 function Login() {
     const navigate = useNavigate();
@@ -31,10 +31,9 @@ function Login() {
 
             localStorage.setItem('accessToken', response.data.accessToken);
 
-            setMessage(response.data.message);
             navigate('/dashboard');
-
-        } catch (error) {
+        }
+        catch (error) {
             setMessage(
                 error.response?.data?.message || 'Login failed'
             );
@@ -42,36 +41,42 @@ function Login() {
     };
 
     return (
-        <div>
-            <h2>Admin Login</h2>
+        <div className="auth-container">
+            <div className="auth-card">
+                <h1>Gym<span>App</span></h1>
+                <h2>Welcome Back</h2>
+                <p className="auth-subtitle">Login to your admin account</p>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+                <form onSubmit={handleSubmit}>
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <button type="submit">Login</button>
-            </form>
+                    <button type="submit">Login</button>
+                </form>
 
-            {message && <p>{message}</p>}
+                {message && <p className="auth-error">{message}</p>}
 
-            <p>
-                Don't have an account? <Link to="/signup">Signup</Link>
-            </p>
+                <p className="auth-link">
+                    Don't have an account? <Link to="/signup">Sign Up</Link>
+                </p>
+            </div>
         </div>
     );
 }

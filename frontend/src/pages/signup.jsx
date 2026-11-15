@@ -1,7 +1,7 @@
-
 import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import './auth.css';
 
 function Signup() {
     const navigate = useNavigate();
@@ -38,8 +38,8 @@ function Signup() {
             setTimeout(() => {
                 navigate('/login');
             }, 1000);
-
-        } catch (error) {
+        }
+        catch (error) {
             setMessage(
                 error.response?.data?.message || 'Registration failed'
             );
@@ -47,30 +47,82 @@ function Signup() {
     };
 
     return (
-        <div>
-            <h2>Gym Admin Signup</h2>
+        <div className="auth-container">
+            <div className="auth-card signup-card">
+                <h1>Gym<span>App</span></h1>
+                <h2>Create Admin Account</h2>
+                <p className="auth-subtitle">Register your gym</p>
 
-            <form onSubmit={handleSubmit}>
-                <input name="name" placeholder="Admin Name" value={formData.name} onChange={handleChange} required />
+                <form onSubmit={handleSubmit}>
+                    <label>Admin Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter admin name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Create password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} required />
+                    <label>Phone Number</label>
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Enter phone number"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input name="gymName" placeholder="Gym Name" value={formData.gymName} onChange={handleChange} required />
+                    <label>Gym Name</label>
+                    <input
+                        type="text"
+                        name="gymName"
+                        placeholder="Enter gym name"
+                        value={formData.gymName}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input name="gymAddress" placeholder="Gym Address" value={formData.gymAddress} onChange={handleChange} required />
+                    <label>Gym Address</label>
+                    <input
+                        type="text"
+                        name="gymAddress"
+                        placeholder="Enter gym address"
+                        value={formData.gymAddress}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <button type="submit">Register</button>
-            </form>
+                    <button type="submit">Create Account</button>
+                </form>
 
-            {message && <p>{message}</p>}
+                {message && <p className="auth-error">{message}</p>}
 
-            <p>
-                Already have an account? <Link to="/login">Login</Link>
-            </p>
+                <p className="auth-link">
+                    Already have an account? <Link to="/login">Login</Link>
+                </p>
+            </div>
         </div>
     );
 }
