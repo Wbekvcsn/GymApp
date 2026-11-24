@@ -35,7 +35,15 @@ const adminSchema=new mongoose.Schema(
     isactive:{
         type:Boolean,
         default:true
-    }
+    },
+    refreshToken: {
+    type: String,
+    default: null
+},
+tokenVersion: {
+    type: Number,
+    default: 0
+}
 },{timestamps:true}    
 )
 const adminModel=mongoose.model("Admin",adminSchema);

@@ -83,4 +83,53 @@ const adminLoginValidation=[
     }
 ]
 
-module.exports={adminRegisterValidation,adminLoginValidation};
+const adminChangePasswordValidation = [
+    body('currentPassword')
+        .notEmpty()
+        .withMessage('Current password is required')
+        .bail(),
+
+    body('newPassword')
+        .notEmpty()
+        .withMessage('New password is required')
+        .bail()
+        .isLength({ min: 6 })
+        .withMessage('Password must be at least 6 characters')
+        .bail()
+        .matches(/[A-Z]/)
+        .withMessage('Password must contain at least one uppercase letter')
+        .bail()
+        .matches(/[a-z]/)
+        .withMessage('Password must contain at least one lowercase letter')
+        .bail()
+        .matches(/[0-9]/)
+        .withMessage('Password must contain at least one number')
+        .bail(),
+
+    body('confirmPassword')
+        .notEmpty()
+        .withMessage('Confirm password is required')
+        .bail()
+        .custom((value, { req }) => {
+            if (value !== req.body.newPassword) {
+                throw new Error('Passwords do not match');
+            }
+            return true;
+        }),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                message: 'Invalid Request',
+                errors: errors.array()
+            });
+        }
+
+        next();
+    }
+];
+
+
+module.exports={adminRegisterValidation,adminLoginValidation,adminChangePasswordValidation};

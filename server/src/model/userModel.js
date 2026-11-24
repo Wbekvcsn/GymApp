@@ -24,7 +24,7 @@ const userSchema=new mongoose.Schema({
     },
       membershipPlan: {
         type: String,
-        enum: ['Monthly', 'Quarterly', 'Yearly'],
+        enum: ['Monthly', 'Quarterly', 'Half-Yearly', 'Yearly'],
         default: 'Monthly'
     },
     membershipStatus: {
@@ -44,7 +44,20 @@ const userSchema=new mongoose.Schema({
     },
     passwordResetExpires:{
         type:Date
-    }
+    },
+    refreshToken: {
+    type: String,
+    default: null
+},
+isDeleted: {
+    type: Boolean,
+    default: false
+}
 },{timestamps:true});
-const userModel=mongoose.model('users',userSchema);
-module.exports=userModel;
+if (mongoose.models.users) {
+    mongoose.deleteModel('users');
+}
+
+const userModel = mongoose.model('users', userSchema);
+
+module.exports = userModel;

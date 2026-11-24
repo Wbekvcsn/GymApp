@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,17 +26,25 @@ function Login() {
 
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/admin/login',
-                formData
-            );
+    'http://localhost:3000/api/admin/login',
+    formData,
+    {
+        withCredentials: true
+    }
+);
+            const token = response.data.accessToken;
 
-            localStorage.setItem('accessToken', response.data.accessToken);
+            if (!token) {
+                throw new Error('Access token not received from server');
+            }
+
+            localStorage.setItem('adminToken', token);
 
             navigate('/dashboard');
         }
         catch (error) {
             setMessage(
-                error.response?.data?.message || 'Login failed'
+                error.response?.data?.message || error.message || 'Login failed'
             );
         }
     };
